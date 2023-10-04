@@ -13,19 +13,28 @@ public class Frogger {
     
     // Field for task 2. Anything to add/change?
     private final Records records;
-    private String firstName, lastName, phoneNumber, zipCode, state, gender;
+    // private String firstName, lastName, phoneNumber, zipCode, state, gender;
+    
 
-    public Frogger(Road road, int position, Records records, String firstName, String lastName, String phoneNumber,
-    String zipCode, String state, String gender) {
+    // public Frogger(Road road, int position, Records records, String firstName, String lastName, String phoneNumber,
+    // String zipCode, String state, String gender) {
+    //     this.road = road;
+    //     this.position = position;
+    //     this.records = records;
+    //     this.firstName = firstName;
+    //     this.lastName = lastName;
+    //     this.phoneNumber = phoneNumber;
+    //     this.zipCode = zipCode;
+    //     this.state = state;
+    //     this.gender = gender;
+    // }
+    private final FroggerID froggerID;
+    //TASK 2:  Violates: Data Clumps. The Frogger has to many parameters that can be passed in using FroggerID class
+    public Frogger(Road road, int position, Records records, FroggerID froggerID){
         this.road = road;
         this.position = position;
         this.records = records;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.zipCode = zipCode;
-        this.state = state;
-        this.gender = gender;
+        this.froggerID = froggerID;
     }
 
     /**
@@ -44,6 +53,13 @@ public class Frogger {
     }
 
     // TODO: Do you notice any issues here?
+    /* TASK 1:
+     * Violates Feature Envy
+     * isOccupied and isValid should not be the methods that Frogger class handles. Instead, it should be within the control of Road class.
+     * 
+     * Violates: Inappropriate Intimacy
+     * the isOccupied is calling getOccupied(), which is the feature of Road class
+     */
     public boolean isOccupied(int position) {
         boolean[] occupied = this.road.getOccupied();
         return occupied[position];
@@ -60,9 +76,12 @@ public class Frogger {
      * 
      * @return true if record successful, else false.
      */
+    // public boolean recordMyself() {
+    //   boolean success = records.addRecord(firstName, lastName, phoneNumber, zipCode, state, gender);
+    //   return success;
+    // }
     public boolean recordMyself() {
-      boolean success = records.addRecord(firstName, lastName, phoneNumber, zipCode, state, gender);
-      return success;
+        return records.addRecord(froggerID);
     }
 
 }
